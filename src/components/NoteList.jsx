@@ -7,7 +7,9 @@ export default function NoteList({newNote}) {
   // rendering notes items
   const renderingNote = () => (
     exampleData.map((note) => (
-      <div key={note.id}>
+      <div key={note.id} 
+         className='bg-[#c6ecd2] rounded-lg w-[300px] h-[200px] py-[15px] px-[20px] relative
+         overflow-y-scroll [scrollbar-width:none] -ms-overflow-style:none] [&::-webkit-scrollbar]:hidden'>
         <Noteitem 
         title={note.title}
         text={note.text}
@@ -19,7 +21,7 @@ export default function NoteList({newNote}) {
 
   return (
     <>
-    <div className='flex'>
+    <div className='flex flex-wrap justify-center my-[80px] mx-[50px] gap-[50px]'>
       {renderingNote()}
     </div>
     </>
