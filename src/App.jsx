@@ -9,10 +9,18 @@ import NoteList from './components/NoteList'
 // utilis just as debug
 
 function App() {
+
+  // state that saves user input
   const [newNote, setNewNote] = useState([])
   
+  // function to delete notes
+  const handleDeleteNotes = (id) => (
+    // keep only the notes whose id does not match the one to delete
+    setNewNote(prev => prev.filter(prev => prev.id !== id))
+  )
+  
   // function to add new note and keeping the prevoius
-  const addNewNotes = (note) => {
+  const handleNewNotes = (note) => {
     setNewNote(prev => [...prev, note])
   }
 
@@ -22,10 +30,12 @@ function App() {
     <Form 
     newNote={newNote}
     setNewNote={setNewNote} 
-    onAddNotes={addNewNotes}/>
+    onAddNotes={handleNewNotes}
+    onDeleteNotes={handleDeleteNotes} />
     <NoteList 
     newNote={newNote}
-    setNewNote={setNewNote} />
+    setNewNote={setNewNote} 
+    onDeleteNotes={handleDeleteNotes} />
     </>
   )
 }

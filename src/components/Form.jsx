@@ -4,7 +4,7 @@ import { CirclePlus } from "lucide-react"
 // function to generate random ID
 import { getRandomId } from "../utils/getRandomId"
 
-export default function Form({newNote, setNewNote, onAddNotes}) {
+export default function Form({newNote, setNewNote, onAddNotes, onDeleteNotes}) {
 
   // state thtat saves user input 
   const [title, setTitle] = useState('')
@@ -16,6 +16,9 @@ export default function Form({newNote, setNewNote, onAddNotes}) {
   // new object with user input
   const inputNote = {id: getRandomId(), title: title, text: text}
   console.log(inputNote)
+ 
+  // to avoide empty notes by clicking close
+  if(!text) return;
   
   onAddNotes(inputNote)
 
@@ -48,7 +51,7 @@ export default function Form({newNote, setNewNote, onAddNotes}) {
         </textarea>
 
         <div className="flex justify-end w-full pr-[25px] pb-[45px] gap-4">
-          <button className="hover:bg-blue-100 rounded-lg e transition py-[5px] px-[10px] cursor-pointer">
+          <button type="button" className="hover:bg-blue-100 rounded-lg e transition py-[5px] px-[10px] cursor-pointer">
             Close
           </button>
           <button 
