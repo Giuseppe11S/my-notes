@@ -1,11 +1,27 @@
 import { useState } from "react"
 import { CirclePlus } from "lucide-react"
 
+// function to generate random ID
+import { getRandomId } from "../utils/getRandomId"
 
-export default function Form() {
+export default function Form({newNote, setNewNote, onAddNotes}) {
+
+  // state thtat saves user input 
+  const [title, setTitle] = useState('')
+  const [text, setText] = useState('')
 
  const handleSubmit = (e) => {
   e.preventDefault()
+  
+  // new object with user input
+  const inputNote = {id: getRandomId(), title: title, text: text}
+  console.log(inputNote)
+  
+  onAddNotes(inputNote)
+
+  // to clear the user input after submit
+  setTitle('')
+  setText('')
  }
 
   return (
@@ -19,19 +35,25 @@ export default function Form() {
         focus:rounded focus:outline-yellow-200 focus:outline-2 cursor-pointer"
         type="text" 
         placeholder="Title (optional)"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         />
         <textarea name="" id=""
         className="w-[600px] resize-none mb-[30px] text-[15px] p-[10px]
         focus:outline focus:rounded focus:outline-yellow-200 focus:outline-2
         cursor-pointer"
-        placeholder="Write your note...">
+        placeholder="Write your note..."
+        value={text}
+        onChange={(e) => setText(e.target.value)}>
         </textarea>
 
         <div className="flex justify-end w-full pr-[25px] pb-[45px] gap-4">
           <button className="hover:bg-blue-100 rounded-lg e transition py-[5px] px-[10px] cursor-pointer">
             Close
           </button>
-          <button className="cursor-pointer">
+          <button 
+          type="submit"
+          className="cursor-pointer">
             <CirclePlus
             className="text-yellow-500"/>
           </button>
