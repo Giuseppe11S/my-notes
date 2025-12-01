@@ -5,6 +5,8 @@ import { CirclePlus } from "lucide-react"
 import { getRandomId } from "../utils/getRandomId"
 
 export default function Form({newNote, setNewNote, onAddNotes, onDeleteNotes}) {
+  // variabile to close or open form background
+  const [isOpen, setIsOpen] = useState(false)
 
   // state thtat saves user input 
   const [title, setTitle] = useState('')
@@ -27,36 +29,53 @@ export default function Form({newNote, setNewNote, onAddNotes, onDeleteNotes}) {
   setText('')
  }
 
+ const closeButton = () => {
+   setTitle('')
+   setText('')
+   setIsOpen(false)
+ }
+
   return (
     <>
     <div className="cnt-nav flex justify-center mt-[40px]">
       <form onSubmit={handleSubmit}
-        className="flex  items-start flex-col w-[700px] h-[250px] 
-        border rounded-lg border-gray-200 pl-[40px] pt-[40px] bg-white">
-        <input 
+        className="flex  items-start flex-col
+        border rounded-lg border-gray-200 pl-[40px] pt-[40px] pr-[40px] bg-white">
+        {isOpen && <input 
         className="w-[600px] mb-[20px] text-[15px] p-[10px] focus:outline 
         focus:rounded focus:outline-yellow-200 focus:outline-2 cursor-pointer"
         type="text" 
         placeholder="Title (optional)"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea name="" id=""
+        />}
+        <textarea
         className="w-[600px] resize-none mb-[30px] text-[15px] p-[10px]
         focus:outline focus:rounded focus:outline-yellow-200 focus:outline-2
         cursor-pointer"
         placeholder="Write your note..."
         value={text}
-        onChange={(e) => setText(e.target.value)}>
+        onChange={(e) => {
+          setText(e.target.value)}}
+        onFocus={() => !isOpen && setIsOpen(true)}
+        >
         </textarea>
 
-        <div className="flex justify-end w-full pr-[25px] pb-[45px] gap-4">
-          <button type="button" className="hover:bg-blue-100 rounded-lg e transition py-[5px] px-[10px] cursor-pointer">
+         <div className="flex justify-end w-full pr-[25px] pb-[30px] gap-4">
+          {isOpen && <button type="button" className="hover:bg-blue-100 rounded-lg e transition py-[5px] px-[10px] cursor-pointer"
+          onClick={() => {
+            closeButton()
+            }}>
             Close
           </button>
-          <button 
+          }
+         <button 
           type="submit"
-          className="cursor-pointer">
+          className="cursor-pointer"
+          onClick={() => {
+            setIsOpen(!isOpen)
+          } }
+          >
             <CirclePlus
             className="text-yellow-500"/>
           </button>
